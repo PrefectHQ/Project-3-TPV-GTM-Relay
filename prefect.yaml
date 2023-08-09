@@ -20,9 +20,7 @@ pull:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: 'message
-
-    '
+- name: 'message'
   version: null
   tags: []
   description: null
