@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "project-3-tpv-gtm-relay"
+version = "0.1.0"
+description = ""
+authors = ["jeanluciano <jeanluciano@mailbox.org>"]
+readme = "README.md"
+packages = [{include = "project_3_tpv_gtm_relay"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+prefect = "^2.11.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
