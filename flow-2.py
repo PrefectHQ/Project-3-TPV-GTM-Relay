@@ -1,18 +1,30 @@
-from prefect import flow, task
-import marvin
-from typing import List
+from marvin import AIApplication
+from marvin_recipes.tools.chroma import MultiQueryChroma
+from prefect import flow
 
 
-@ai_fn
-@task
-def resource_content(text: str) -> str:
-     """Given input text, suggest relevant Prefect resources based on the content of text""" 
+knowledge_bot = AIApplication(
+    name="knowledge bot",
+    description="suggests resources based on a user's introduction - provide links",
+    tools=[MultiQueryChroma(description="research Prefect topics", client_type="base")],
+)
+
 
 @flow
-def main_flow(text: str):
-   if not text:
-       resource_content("Hi I'm Rob, I'd like to learn how Prefect integrates with ECS")
-   return resource_content(text)
+async def suggest_resources(introduction_message: str):
+    return await knowledge_bot.run(introduction_message)
+
 
 if __name__ == "__main__":
-    main_flow()
+    import asyncio
+    import marvin
+
+    marvin.settings.log_level = "DEBUG"
+
+    result = asyncio.run(
+        suggest_resources(
+            introduction_message="Hi, I'm a new Prefect user and I'm interested in prefect blocks"  # noqa: E501
+        )
+    )
+
+    print(result)
